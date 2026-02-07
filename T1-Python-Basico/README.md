@@ -6,13 +6,38 @@
 
 ## 📋 Tabla de Contenidos
 
-1. [Entrada y Salida de Datos](#-entrada-y-salida-de-datos)
-2. [Tipos de Datos](#-tipos-de-datos)
-3. [Condicionales](#-condicionales)
-4. [Bucles (Loops)](#-bucles-loops)
-5. [Funciones](#-funciones)
-6. [Virtual Environment (venv)](#-virtual-environment-venv)
-7. [Linter](#-linter)
+1. [Comentarios](#-comentarios)
+2. [Entrada y Salida de Datos](#-entrada-y-salida-de-datos)
+3. [Tipos de Datos](#-tipos-de-datos)
+4. [Condicionales](#-condicionales)
+5. [Indentación y Estructuras de Control](#-indentación-y-estructuras-de-control)
+6. [Bucles (Loops)](#-bucles-loops)
+7. [Funciones](#-funciones)
+8. [Paso de Parámetros](#-paso-de-parámetros)
+9. [Devolución Múltiple y Funciones Anidadas](#-devolución-múltiple-y-funciones-anidadas)
+10. [Documentación de Funciones](#-documentación-de-funciones)
+11. [Python 2 vs Python 3](#-python-2-vs-python-3)
+12. [Entornos de Desarrollo](#-entornos-de-desarrollo)
+13. [Virtual Environment (venv)](#-virtual-environment-venv)
+14. [Linter](#-linter)
+15. [Resumen de Conceptos Clave](#-resumen-de-conceptos-clave)
+16. [Buenas Prácticas](#-buenas-prácticas)
+
+---
+
+## 💬 Comentarios
+
+Los comentarios en Python comienzan con `#` y se descartan durante la ejecución.
+
+```python
+# Esto es un comentario de una línea
+x = 5  # Comentario al final de una línea
+
+# Los comentarios ayudan a explicar el código
+# y son ignorados por el intérprete
+```
+
+**Nota:** Python **NO usa punto y coma (`;`)** para terminar líneas. El salto de línea indica el fin de la sentencia.
 
 ---
 
@@ -27,10 +52,10 @@ La función `input()` permite solicitar información al usuario. **Importante:**
 x = input("Introduzca un número: ")  # input() siempre devuelve una cadena
 
 # Conversión a número real
-num = float(x) 
+num = float(x)  # Convierte x en un número real (flotante)
 
 # Conversión a número entero
-num = int(x)  
+num = int(x)  # Convierte x en un número entero
 ```
 
 ### Salida de Datos
@@ -97,6 +122,35 @@ print(str1.capitalize())  # Primera letra en mayúscula
 ```
 
 **Nota:** Aunque Python tiene tipado dinámico, existen formas de "tipar" estáticamente las variables (type hints).
+
+### Operadores de Cadenas
+
+```python
+# Concatenación con +
+word = 'Help' + 'A'  # 'HelpA'
+
+# Repetición con *
+word = 'Hola' * 3  # 'HolaHolaHola'
+
+# Combinación
+word = '<' + 'Help' * 2 + '>'  # '<HelpHelp>'
+```
+
+**Importante:** Los operadores `+` y `*` NO modifican las cadenas originales, sino que crean nuevas cadenas.
+
+### Acceso a Caracteres (Slicing Básico)
+
+```python
+palabra = "Python"
+print(palabra[0])     # 'P' (primer carácter)
+print(palabra[0:2])   # 'Py' (del 0 al 2, sin incluir el 2)
+print(palabra[2:4])   # 'th' (del 2 al 4, sin incluir el 4)
+print(palabra[-1])    # 'n' (último carácter)
+```
+
+- Los índices comienzan en **0**
+- Los índices negativos cuentan desde el final (-1 es el último)
+- El formato es `[inicio:fin]` donde `fin` es **exclusivo**
 
 ---
 
@@ -168,6 +222,29 @@ while True:
         break
 ```
 
+### Problemas de Indentación
+
+**IMPORTANTE:** Python es **muy estricto** con la indentación.
+
+❌ **Errores comunes:**
+```python
+# Mezclar espacios y tabulaciones (IndentationError)
+if x > 5:
+    print("4 espacios")
+	print("1 tab")  # ERROR!
+
+# Indentación inconsistente
+if x > 5:
+    print("4 espacios")
+      print("6 espacios")  # ERROR!
+```
+
+**Reglas:**
+- **Python 3:** Solo acepta **espacios** (no tabuladores reales)
+- **Python 2:** Acepta espacios o tabs, pero NO mezclados
+- Configurar el editor para convertir TAB → 4 espacios
+- Usar siempre el mismo método de indentación en todo el archivo
+
 ---
 
 ## 🔁 Bucles (Loops)
@@ -203,6 +280,26 @@ for number in numbers:
 - `range(inicio, fin)` → De inicio a fin-1
 - `range(inicio, fin, paso)` → De inicio a fin-1 con incremento de 'paso'
 
+### Cláusula `else` en Bucles
+
+Tanto `while` como `for` pueden tener una cláusula `else` que se ejecuta cuando el bucle termina normalmente (sin `break`).
+
+```python
+# else con while
+n = 0
+while n < 3:
+    print(n)
+    n += 1
+else:
+    print("Bucle while terminado")
+
+# else con for
+for i in range(3):
+    print(i)
+else:
+    print("Bucle for terminado")
+```
+
 ---
 
 ## ⚙️ Funciones
@@ -236,6 +333,19 @@ def sum(a: int, b: int) -> int:
 
 - `a: int, b: int` → Los parámetros deben ser enteros
 - `-> int` → La función devuelve un entero
+
+### Valor de Retorno por Defecto
+
+**Las funciones SIEMPRE devuelven un valor**, incluso sin `return` explícito. Ese valor es `None` (equivalente a `null` o `NULL` en otros lenguajes).
+
+```python
+def saludar(nombre):
+    print(f"Hola, {nombre}")
+    # No hay return
+
+resultado = saludar("Ana")  # Imprime "Hola, Ana"
+print(resultado)             # None
+```
 
 ---
 
@@ -312,6 +422,100 @@ help(factorial)  # Similar al comando 'man' de Linux
 - Documenta el propósito de la función
 - Describe parámetros y valores de retorno
 - Accesible mediante `help(nombre_funcion)`
+
+### Convenciones de Docstrings (PEP 257)
+
+**Reglas básicas:**
+1. Empezar con mayúscula y terminar en punto
+2. Usar siempre triple comilla `"""`
+3. NO repetir el nombre de la función
+4. Sin líneas en blanco antes/después de la docstring
+5. Parámetros: usar `:param nombre:` como prefijo
+6. Retorno: usar `:return:` como prefijo
+
+**Para documentación multilínea:**
+```python
+def funcion_compleja(a, b):
+    """Resumen en una línea.
+    
+    Explicación detallada después de una línea en blanco.
+    Puede extenderse varios párrafos.
+    
+    :param a: Descripción del parámetro a.
+    :param b: Descripción del parámetro b.
+    :return: Descripción de lo que devuelve.
+    """
+    return a + b
+```
+
+---
+
+## 🔄 Python 2 vs Python 3
+
+**Python 3 introdujo cambios NO compatibles con Python 2:**
+
+| Característica | Python 2 | Python 3 |
+|---------------|----------|----------|
+| **print** | `print "Hola"` (operador) | `print("Hola")` (función) |
+| **input** | `raw_input()` | `input()` |
+| **División** | `5 / 2 = 2` (trunca) | `5 / 2 = 2.5` (real) |
+| **División entera** | `5 / 2 = 2` | `5 // 2 = 2` |
+| **Formato strings** | `"Hola %s" % nombre` | `"Hola {}".format(nombre)` |
+
+**Ejemplo Python 2:**
+```python
+x = raw_input("Numero: ")
+num = float(x)
+print "El numero es %.2f" % num
+```
+
+**Equivalente Python 3:**
+```python
+x = input("Numero: ")
+num = float(x)
+print("El numero es {0:.2f}".format(num))
+```
+
+---
+
+## 💻 Entornos de Desarrollo
+
+### Consola Interactiva
+
+Ejecutar `python` en la terminal abre un **REPL** (Read-Eval-Print Loop):
+
+```bash
+$ python
+>>> print("Hola")
+Hola
+>>> 5 + 3
+8
+>>> quit()  # Salir
+```
+
+### IDLE
+
+**IDLE** es el entorno gráfico oficial de Python, más cómodo que la consola de texto.
+
+### Archivos .py
+
+Crear y ejecutar programas:
+
+```bash
+# Crear archivo
+$ echo "print('Hola')" > hola.py
+
+# Ejecutar
+$ python hola.py
+Hola
+```
+
+### Compilación Automática
+
+- Python **compila** automáticamente los archivos `.py` a **bytecode** (`.pyc`)
+- La primera ejecución compila y ejecuta
+- Ejecuciones posteriores solo ejecutan (si no hubo cambios)
+- Acelera la carga de módulos
 
 ---
 
@@ -407,15 +611,26 @@ Pylint asigna una puntuación de **0 a 10** según:
 
 | Concepto | Descripción |
 |----------|-------------|
+| `#` | Comentarios (línea completa o al final de línea) |
 | `input()` | Siempre devuelve string, requiere conversión |
 | `print()` | Acepta múltiples argumentos, soporta format() |
 | Tipado dinámico | Las variables pueden cambiar de tipo |
+| `+` en strings | Concatenación de cadenas |
+| `*` en strings | Repetición de cadenas |
+| Slicing `[0:2]` | Acceso a subsecuencias (caracteres de cadena) |
 | `and`, `or`, `not` | Operadores booleanos de Python |
 | `range()` | Genera secuencias numéricas iterables |
+| `else` en bucles | Se ejecuta si el bucle termina sin `break` |
 | Type hints | Anotaciones de tipo opcionales (Python 3+) |
+| `None` | Valor por defecto que devuelven las funciones |
 | Paso por valor | Inmutables: str, int, float, tuple |
 | Paso por referencia | Mutables: list, dict, objetos |
 | Docstrings | Documentación en triple comilla (`"""`) |
+| PEP 257 | Convenciones para escribir docstrings |
+| Indentación | 4 espacios, NO mezclar con tabs |
+| Python 2 vs 3 | `print`, `input`, división, formato |
+| IDLE | Entorno gráfico oficial de Python |
+| `.pyc` | Bytecode compilado automáticamente |
 | venv | Entornos virtuales aislados |
 | Pylint | Linter para verificar calidad del código |
 
