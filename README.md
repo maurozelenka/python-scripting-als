@@ -23,7 +23,7 @@ Para ejecutar los ejercicios de este repositorio, se recomienda configurar un en
 
 1. **Clonar el repositorio:**
    ```bash
-   git clone [https://github.com/tu-usuario/python-scripting-als.git](https://github.com/tu-usuario/python-scripting-als.git)
+   git clone https://github.com/maurozelenka/python-scripting-als.git
    cd python-scripting-als
    
 2. Crear el entorno virtual:
